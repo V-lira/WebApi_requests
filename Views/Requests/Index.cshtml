@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebApplication8.Models.RepairRequest>
+
+@{
+    ViewBag.Title = "Заявки на ремонт";
+}
+
+<h2>Заявки на ремонт</h2>
+
+@using (Html.BeginForm("Index", "Requests", FormMethod.Get))
+{
+    <p>
+        Фильтр по статусу:
+        @Html.DropDownList("status", new SelectList(new[]
+        {
+            new { Value = "", Text = "Все" },
+            new { Value = "New", Text = "Новая" },
+            new { Value = "InProgress", Text = "В работе" },
+            new { Value = "Completed", Text = "Завершена" },
+            new { Value = "Cancelled", Text = "Отменена" }
+        }, "Value", "Text", Request.QueryString["status"]))
+        <input type="submit" value="Применить" />
+        @Html.ActionLink("Сбросить", "Index")
+    </p>
+}
+
+<p>
+    @Html.ActionLink("Создать новую заявку", "Create", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Статистика", "Statistics", null, new { @class = "btn btn-default" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Клиент</th>
+            <th>Устройство</th>
+            <th>Создана</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Id</td>
+                <td>@r.ClientName</td>
+                <td>@r.Device</td>
+                <td>@r.CreatedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@r.Status</td>
+                <td>@Html.ActionLink("Подробнее", "Details", new { id = r.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,17 @@
+﻿@model WebApplication8.ViewModels.StatisticsViewModel
+
+@{
+    ViewBag.Title = "Статистика";
+}
+
+<h2>Статистика заявок</h2>
+
+<table class="table">
+    <tr><th>Всего заявок</th><td>@Model.Total</td></tr>
+    <tr><th>Новые</th><td>@Model.New</td></tr>
+    <tr><th>В работе</th><td>@Model.InProgress</td></tr>
+    <tr><th>Завершённые</th><td>@Model.Completed</td></tr>
+    <tr><th>Отменённые</th><td>@Model.Cancelled</td></tr>
+</table>
+
+<p>@Html.ActionLink("<- Назад к списку", "Index")</p>

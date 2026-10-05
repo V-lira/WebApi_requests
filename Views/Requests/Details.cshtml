@@ -1,0 +1,47 @@
+﻿@model WebApplication8.Models.RepairRequest
+
+@{
+    ViewBag.Title = "Заявка Номер" + Model.Id;
+}
+
+<h2>Заявка №@Model.Id</h2>
+
+<dl class="dl-horizontal">
+    <dt>Клиент</dt>
+    <dd>@Model.ClientName</dd>
+
+    <dt>Устройство</dt>
+    <dd>@Model.Device</dd>
+
+    <dt>Описание проблемы</dt>
+    <dd>@Model.Problem</dd>
+
+    <dt>Создана</dt>
+    <dd>@Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+
+    <dt>Статус</dt>
+    <dd>@Model.Status</dd>
+</dl>
+
+<hr />
+
+<h4>Изменить статус</h4>
+
+@using (Html.BeginForm("ChangeStatus", "Requests", FormMethod.Post))
+{
+    @Html.Hidden("id", Model.Id)
+    <p>
+        @Html.DropDownList("status", new SelectList(new[]
+        {
+            new { Value = "New", Text = "Новая" },
+            new { Value = "InProgress", Text = "В работе" },
+            new { Value = "Completed", Text = "Завершена" },
+            new { Value = "Cancelled", Text = "Отменена" }
+        }, "Value", "Text", Model.Status.ToString()))
+        <input type="submit" value="Сохранить" />
+    </p>
+}
+
+<p>
+    @Html.ActionLink("<- Назад к списку", "Index")
+</p>
